@@ -138,7 +138,8 @@ def fillDatabaseUsers(pages):
                     'id': item['id'],
                     'name': item['name'].strip().replace('"', '') + ' ' + item['lastname'].strip().replace('"', ''),
                     'email': item['email'],
-                    'group_type': item['group']['type']
+                    'group_type': item['group']['type'],
+                    'org_name': item['organization']['name'].strip().replace('"', '') if item['organization'] != '' else 'No Org'
                 }
                 eddyUserData.append(obj)
         else:
@@ -218,5 +219,8 @@ if newPages != 0:
 else:
     print('Checking new posts in previous tickets.')
     checkMessages()
+    print('Updating users.')
+    fillDatabaseUsers(int(userdata['pagination']['total_pages']))
+    print('Users has been updated in DB.')
 
 print('Work finished!')
